@@ -51,9 +51,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnPay = findViewById(R.id.btn_pay);
         lvFood = findViewById(R.id.lv_food);
 
-        listFood.add(new Food(true, R.drawable.pepsi, "Pepsi Cola", 5000));
+        listFood.add(new Food(false, R.drawable.pepsi, "Pepsi Cola", 5000));
         listFood.add(new Food(false, R.drawable.pepsi, "Coca Cola", 6000));
-        listFood.add(new Food(true, R.drawable.pepsi, "Trà Đá", 7000));
+        listFood.add(new Food(false, R.drawable.pepsi, "Trà Đá", 7000));
 
         adapterFood = new AdapterFood(this, R.layout.row_item, listFood);
         lvFood.setAdapter(adapterFood);
@@ -119,13 +119,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btn_pay:
-                adapterFood.notifyDataSetChanged();
-
                 List<Food> listPay = new ArrayList<>();
                 for (int i = 0; i < listFood.size(); i++) {
                     if (listFood.get(i).isCheck()) {
                         listPay.add(listFood.get(i));
-                        Log.d(TAG, "onClick: " + listFood.get(i).getPrice());
                     }
                 }
 

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,7 +39,7 @@ public class AdapterFood extends ArrayAdapter<Food> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
 
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.row_item, parent, false);
@@ -54,11 +55,22 @@ public class AdapterFood extends ArrayAdapter<Food> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Food food = listFood.get(position);
+        final Food food = listFood.get(position);
         viewHolder.cbFood.setChecked(food.isCheck());
         viewHolder.imgFood.setImageResource(food.getImage());
         viewHolder.txtName.setText(food.getName());
         viewHolder.txtPrice.setText(String.valueOf(food.getPrice()));
+
+        viewHolder.cbFood.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    food.setCheck(true);
+                } else {
+                    food.setCheck(false);
+                }
+            }
+        });
 
         return convertView;
     }
